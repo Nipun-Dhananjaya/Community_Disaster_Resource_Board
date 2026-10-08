@@ -1,10 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Community Disaster Resource Board</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@600;700&family=Lato:wght@400;700;900&display=swap"
+          rel="stylesheet">
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+        <symbol id="i-home" viewBox="0 0 24 24">
+            <path d="M12 3 3 11h2.5v9h13v-9H21L12 3Zm-2 17v-5h4v5" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linejoin="round"/>
+        </symbol>
+        <symbol id="i-box" viewBox="0 0 24 24">
+            <rect x="4" y="4" width="16" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="2"/>
+            <rect x="9" y="9" width="6" height="6" fill="currentColor"/>
+        </symbol>
+        <symbol id="i-heart" viewBox="0 0 24 24">
+            <path d="M12 20s-8-5-8-11a4.5 4.5 0 0 1 8-2.5A4.5 4.5 0 0 1 20 9c0 6-8 11-8 11Z" fill="currentColor"/>
+        </symbol>
+        <symbol id="i-arrow" viewBox="0 0 24 24">
+            <path d="M4 12h15m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                  stroke-linejoin="round"/>
+        </symbol>
+        <symbol id="i-alert" viewBox="0 0 24 24">
+            <path d="M12 4v10" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+            <circle cx="12" cy="19" r="2" fill="currentColor"/>
+        </symbol>
+    </defs>
+</svg>
 
+<div class="emergency" role="region" aria-label="Emergency numbers">Life in danger? <a href="tel:119">Call 119
+    now</a><span class="sep">|</span><a href="tel:117">Disaster hotline 117</a></div>
+
+<header>
+    <div class="wrap bar">
+        <a class="brand" href="#" aria-label="Community Disaster Resource Board home"><span class="logo"><svg><use
+                href="#i-home"/></svg></span><span>Community Disaster<br>Resource Board</span></a>
+        <button class="menu-btn" id="menu" aria-expanded="false" aria-controls="nav" aria-label="Open menu">
+            <svg width="22" height="22" viewBox="0 0 24 24">
+                <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+        </button>
+        <nav id="nav" aria-label="Main">
+            <ul>
+                <li><a href="#" aria-current="page">Home</a></li>
+                <li><a href="#updates">Resource Board</a></li>
+                <li><a href="#">Request Help</a></li>
+                <li><a href="#">Offer Help</a></li>
+                <li><a href="#">Alerts</a></li>
+                <li><a href="#">Safety Guides</a></li>
+                <li>
+                    <button class="lang" id="lang" aria-label="Change language">EN ▾</button>
+                </li>
+                <li><a class="login" href="#" style="display:inline-block;line-height:40px;padding:0 14px">Log in</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<div class="incident">
+    <div class="wrap">
+        <span class="tag active">▲ Active incident</span>
+        <p><b>Kelani River flooding</b> · Gampaha and Colombo districts · Severity high · Updated <span
+                data-ago="14">14</span> min ago</p>
+        <a class="more" href="#">View details</a>
+    </div>
+</div>
+
+<main class="wrap">
+    <section class="hero">
+        <div>
+            <h1>Find help.<br>Offer help.<br>Stay connected.</h1>
+            <p class="lead">Shelters, supplies, volunteers and rides near you, kept current by the people running
+                them.</p>
+            <div class="cta"><a class="btn red" href="#">I need help</a><a class="btn navy" href="#">I can help</a>
+            </div>
+            <form class="search" id="search" role="search">
+                <label for="place" class="sr" style="position:absolute;left:-9999px">Town or postcode</label>
+                <input id="place" type="text" placeholder="Enter your town or postcode" autocomplete="postal-code">
+                <button type="button" id="geo">Use my location</button>
+            </form>
+            <p id="geo-msg" role="status" aria-live="polite"></p>
+            <p class="hint">Every listing shows when it was last updated.</p>
+        </div>
+
+        <div class="map" id="map">
+            <svg viewBox="0 0 1328 940" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                <rect width="1328" height="940" fill="#e6edf1"/>
+                <rect x="1010" y="120" width="190" height="110" rx="10" fill="#cfe5d3"/>
+                <rect x="90" y="570" width="160" height="90" rx="10" fill="#cfe5d3"/>
+                <path d="M0 160c140 0 260 80 360 190s240 190 390 200 380-30 580 40v100c-210-70-420-30-600-50S300 540 150 420C90 370 50 330 0 320Z"
+                      fill="#b9d6e5"/>
+                <path d="M1000 480c130-20 250 40 328 120v200c-70-110-190-200-328-190Z" fill="#b9d6e5"/>
+                <g stroke="#fff" stroke-width="14" fill="none">
+                    <path d="M0 360 1328 220"/>
+                    <path d="M60 -10 150 940"/>
+                    <path d="M370 -10 450 940"/>
+                    <path d="M1050 -10 940 940"/>
+                    <path d="M1200 0 1230 940"/>
+                    <path d="M0 740 1328 700"/>
+                </g>
+                <ellipse cx="960" cy="440" rx="190" ry="140" fill="#c62b21" fill-opacity=".1" stroke="#c62b21"
+                         stroke-width="3" stroke-dasharray="9 7"/>
+            </svg>
+            <span class="zone">- - Flood-risk zone</span>
+        </div>
+    </section>
+
+    <ul class="stats">
+        <li class="card stat"><span class="ic g"><svg><use href="#i-home"/></svg></span>
+            <div><strong data-count="42">42</strong><span>Shelters open</span></div>
+        </li>
+        <li class="card stat"><span class="ic o"><svg><use href="#i-box"/></svg></span>
+            <div><strong data-count="118">118</strong><span>Supply points</span></div>
+        </li>
+        <li class="card stat"><span class="ic p"><svg><use href="#i-heart"/></svg></span>
+            <div><strong data-count="76">76</strong><span>Volunteers ready</span></div>
+        </li>
+        <li class="card stat"><span class="ic t"><svg><use href="#i-arrow"/></svg></span>
+            <div><strong data-count="19">19</strong><span>Rides offered</span></div>
+        </li>
+        <li class="card stat"><span class="ic r"><svg><use href="#i-alert"/></svg></span>
+            <div><strong data-count="31">31</strong><span>Open requests</span></div>
+        </li>
+    </ul>
+
+    <section id="updates" aria-labelledby="lu">
+        <div class="sec-head"><h2 id="lu">Latest updates</h2><a href="#">Open the full board</a></div>
+        <ul class="updates">
+            <li class="card upd g"><span class="ic g"><svg><use href="#i-home"/></svg></span>
+                <div>
+                    <h3>St. Mary's Church Hall <span class="badge">✓ Verified</span></h3>
+                    <div class="row"><span class="st ok">● Available</span><span>24 beds free</span></div>
+                    <p class="meta">Negombo · 2.4 km · Updated <span data-ago="6">6</span> min ago</p></div>
+            </li>
+            <li class="card upd o"><span class="ic o"><svg><use href="#i-box"/></svg></span>
+                <div>
+                    <h3>Drinking water, 500 bottles</h3>
+                    <div class="row"><span class="st lim">▲ Limited</span><span>Pickup only</span></div>
+                    <p class="meta">Katunayake · 4.1 km · Updated <span data-ago="20">20</span> min ago</p></div>
+            </li>
+            <li class="card upd r"><span class="ic r"><svg><use href="#i-alert"/></svg></span>
+                <div>
+                    <h3>Family of 5 needs evacuation</h3>
+                    <div class="row"><span class="st crit">▲ Critical</span><span>Boat or truck</span></div>
+                    <p class="meta">Kelaniya · Critical · Posted <span data-ago="9">9</span> min ago</p></div>
+            </li>
+        </ul>
+    </section>
+
+    <ol class="steps">
+        <li class="card">
+            <div><b>Search</b><span>Filter by what you need and how far you can go.</span></div>
+        </li>
+        <li class="card">
+            <div><b>Contact or request</b><span>Call a listing, or post a request in four short steps.</span></div>
+        </li>
+        <li class="card">
+            <div><b>Stay updated</b><span>Get alerts by SMS, email or app for your area.</span></div>
+        </li>
+    </ol>
+</main>
+
+<footer>
+    <div class="wrap">
+        <ul>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Privacy</a></li>
+            <li><a href="#">Terms</a></li>
+            <li><a href="#">Accessibility</a></li>
+        </ul>
+        <button id="lb" aria-pressed="false">Low-bandwidth mode: <span id="lbs">Off</span></button>
+    </div>
+</footer>
 </body>
 </html>
