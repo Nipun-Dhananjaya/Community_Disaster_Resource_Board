@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-display: var(--font-source-serif), Georgia, serif;
+  --font-sans: var(--font-source-sans), system-ui, sans-serif;
+}
+
+@theme {
+  --color-navy: #12304d;
+  --color-navy-soft: #1d4468;
+  --color-canvas: #edf1f4;
+  --color-line: #d9e0e7;
+  --color-muted: #51657a;
+  --color-alert: #c5291f;
+  --color-alert-soft: #fbe7e4;
+  --color-ok: #1e8a5a;
+  --color-ok-soft: #dcf2e7;
+  --color-warn: #d8731f;
+  --color-warn-soft: #fdf0c4;
+  --color-care: #6f4db8;
+  --color-ride: #15878c;
+}
+
+html { scroll-padding-top: 1rem; }
+body { background: var(--color-canvas); color: var(--color-navy); font-family: var(--font-sans); }
+
+:focus-visible { outline: 3px solid #1a73e8; outline-offset: 2px; border-radius: 4px; }
+
+/* Low-bandwidth mode: drop the map and decorative weight */
+html.lowbw .hero-map, html.lowbw .board-map { display: none; }
+html.lowbw .hero-grid { grid-template-columns: 1fr; }
+html.lowbw * { transition: none !important; animation: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
