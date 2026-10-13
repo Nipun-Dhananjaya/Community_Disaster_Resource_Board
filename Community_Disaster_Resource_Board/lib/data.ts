@@ -26,7 +26,7 @@ export const stats: { value: number; label: string; tone: Tone; icon: IconName }
   { value: 31, label: "Open requests", tone: "alert", icon: "alert" },
 ];
 
-export type IconName = "home" | "box" | "heart" | "arrow" | "alert" | "check";
+export type IconName = "home" | "box" | "heart" | "arrow" | "alert" | "check" | "plus" | "bolt" | "dots";
 
 export const updates: {
   id: string;

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="41b3156a-63f5-40fe-8d23-8e3e303781f4" name="Changes" comment="add shelter details page">
+      <change beforePath="$PROJECT_DIR$/disaster-board/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/disaster-board/app/board/[id]/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/disaster-board/app/board/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/disaster-board/app/globals.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/disaster-board/app/layout.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/disaster-board/app/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/disaster-board/components/EmergencyBar.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/disaster-board/components/Footer.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/disaster-board/components/Header.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/disaster-board/components/Hero.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/disaster-board/components/HeroMap.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/disaster-board/components/HeroMapLive.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/disaster-board/components/HowItWorks.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/disaster-board/components/Icon.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/disaster-board/components/IncidentBanner.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/disaster-board/components/LatestUpdates.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/disaster-board/components/LocationSearch.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/disaster-board/components/LowBandwidthToggle.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/disaster-board/components/StatsStrip.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/disaster-board/components/board/BoardClient.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/disaster-board/components/board/BoardMap.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/disaster-board/components/board/BoardMapLive.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/disaster-board/components/board/FiltersPanel.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/disaster-board/components/board/ListingCard.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/disaster-board/components/detail/DetailActions.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/disaster-board/components/detail/DetailMap.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/disaster-board/components/detail/DetailMapLive.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/disaster-board/lib/data.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/disaster-board/lib/details.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/disaster-board/lib/flood-zone.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/disaster-board/lib/geo.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/disaster-board/lib/listings.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/disaster-board/lib/tone.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/disaster-board/next.config.mjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/disaster-board/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/disaster-board/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/disaster-board/postcss.config.mjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/disaster-board/tsconfig.json" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="3KX6nl8BON1ZldcDDxa2ccX3ZGA" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="dart.analysis.tool.window.visible" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Community_Disaster_Resource_Board" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="show.migrate.to.gradle.popup" value="false" />
+    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\IntelliJ IDEA 2021.2.3\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="G:\Wayamba\Level 3\CMIS 3124\Community_Disaster_Resource_Board\disaster-board\lib" />
+      <recent name="G:\Wayamba\Level 3\CMIS 3124\Community_Disaster_Resource_Board\disaster-board\components" />
+      <recent name="G:\Wayamba\Level 3\CMIS 3124\Community_Disaster_Resource_Board\disaster-board\app\board" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="41b3156a-63f5-40fe-8d23-8e3e303781f4" name="Changes" comment="" />
+      <created>1791691736876</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1791691736876</updated>
+      <workItem from="1791691738819" duration="6132000" />
+      <workItem from="1791717119615" duration="61000" />
+      <workItem from="1791717195086" duration="337000" />
+      <workItem from="1791717557339" duration="232000" />
+      <workItem from="1791717884964" duration="33000" />
+    </task>
+    <task id="LOCAL-00001" summary="add shelter details page">
+      <created>1791703102255</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1791703102255</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="add shelter details page" />
+    <option name="LAST_COMMIT_MESSAGE" value="add shelter details page" />
+  </component>
+</project>
