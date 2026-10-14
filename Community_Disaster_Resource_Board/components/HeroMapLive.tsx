@@ -4,9 +4,9 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { useRouter } from "next/navigation";
 import { GeoJSON, MapContainer, Marker, TileLayer } from "react-leaflet";
-import { featured } from "/lib/data";
-import { listings } from "/lib/listings";
-import { floodZone } from "/lib/flood-zone";
+import { featured } from "../lib/data";
+import { listings } from "../lib/listings";
+import { floodZone } from "../lib/flood-zone";
 import { pinIcon } from "./board/BoardMapLive";
 import { Icon } from "./Icon";
 

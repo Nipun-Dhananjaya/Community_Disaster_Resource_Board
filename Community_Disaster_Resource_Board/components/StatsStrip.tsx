@@ -1,5 +1,5 @@
-import { stats } from "/lib/data";
-import { toneBg } from "/lib/tone";
+import { stats } from "../lib/data";
+import { toneBg } from "../lib/tone";
 import { Icon } from "./Icon";
 
 export function StatsStrip() {

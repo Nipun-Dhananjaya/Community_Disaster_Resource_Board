@@ -1,4 +1,4 @@
-import type { IconName } from "/lib/data";
+import type { IconName } from "../lib/data";
 
 const paths: Record<IconName, React.ReactNode> = {
   home: <path d="M4 11.5 12 5l8 6.5V19a1 1 0 0 1-1 1h-4.5v-5h-5v5H5a1 1 0 0 1-1-1z" />,

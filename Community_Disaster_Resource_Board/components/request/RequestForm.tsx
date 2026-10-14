@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   emptyValues, fullSchema, stepSchemas, validate, type FormValues,
-} from "@/lib/request-schema";
+} from "../../lib/request-schema";
 import { DetailsStep, LocationStep, NeedStep, ReviewStep } from "./Steps";
 import { Progress } from "./ui";
 

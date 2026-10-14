@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { EmergencyBar } from "/components/EmergencyBar";
-import { Header } from "/components/Header";
-import { Footer } from "/components/Footer";
-import { Icon } from "/components/Icon";
-import { DetailMap } from "/components/detail/DetailMap";
-import { ShareSaveButtons } from "/components/detail/DetailActions";
-import { getDetail } from "/lib/details";
-import { directionsUrl, distanceKm } from "/lib/geo";
-import { categoryMeta, listings, statusClass, statusLabel, statusMark, Status } from "/lib/listings";
-import { minutes, toneBg, toneBorder } from "/lib/tone";
+import { EmergencyBar } from "../../../components/EmergencyBar";
+import { Header } from "../../../components/Header";
+import { Footer } from "../../../components/Footer";
+import { Icon } from "../../../components/Icon";
+import { DetailMap } from "../../../components/detail/DetailMap";
+import { ShareSaveButtons } from "../../../components/detail/DetailActions";
+import { getDetail } from "../../../lib/details";
+import { directionsUrl, distanceKm } from "../../../lib/geo";
+import { categoryMeta, listings, statusClass, statusLabel, statusMark, Status } from "../../../lib/listings";
+import { minutes, toneBg, toneBorder } from "../../../lib/tone";
 
 type Props = { params: Promise<{ id: string }> };
 

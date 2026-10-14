@@ -1,4 +1,4 @@
-import { needsByCategory, needsLabel, type Category } from "@/lib/listings";
+import { needsByCategory, needsLabel, type Category } from "../../lib/listings";
 
 const windows = [
   { min: 60, label: "1 h" },

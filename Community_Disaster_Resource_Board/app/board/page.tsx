@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { EmergencyBar } from "/components/EmergencyBar";
-import { Header } from "/components/Header";
-import { Footer } from "/components/Footer";
-import { BoardClient } from "/components/board/BoardClient";
-import { categoryOrder, Category } from "/lib/listings";
+import { EmergencyBar } from "../../components/EmergencyBar";
+import { Header } from "../../components/Header";
+import { Footer } from "../../components/Footer";
+import { BoardClient } from "../../components/board/BoardClient";
+import { categoryOrder, Category } from "../../lib/listings";
 
 export const metadata: Metadata = {
   title: "Resource Board · Community Disaster Resource Board",

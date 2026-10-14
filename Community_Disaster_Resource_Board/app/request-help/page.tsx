@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { EmergencyBar } from "@/components/EmergencyBar";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
-import { RequestForm } from "@/components/request/RequestForm";
+import { EmergencyBar } from "../../components/EmergencyBar";
+import { Header } from "../../components/Header";
+import { Footer } from "../../components/Footer";
+import { RequestForm } from "../../components/request/RequestForm";
 
 export const metadata: Metadata = {
   title: "Request help · Community Disaster Resource Board",

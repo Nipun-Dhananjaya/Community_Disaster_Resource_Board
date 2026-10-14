@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { updates } from "/lib/data";
-import { toneBadge, toneBg, toneBorder } from "/lib/tone";
+import { updates } from "../lib/data";
+import { toneBadge, toneBg, toneBorder } from "../lib/tone";
 import { Icon } from "./Icon";
 
 export function LatestUpdates() {

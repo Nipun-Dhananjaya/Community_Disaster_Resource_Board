@@ -4,8 +4,8 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { useEffect } from "react";
 import { GeoJSON, MapContainer, Marker, TileLayer, useMap } from "react-leaflet";
-import { categoryMeta, Listing } from "/lib/listings";
-import { floodZone } from "/lib/flood-zone";
+import { categoryMeta, Listing } from "../../lib/listings";
+import { floodZone } from "../../lib/flood-zone";
 
 export type Area = { south: number; west: number; north: number; east: number };
 

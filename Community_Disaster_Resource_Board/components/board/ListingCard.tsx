@@ -1,8 +1,8 @@
 import Link from "next/link";
 import {
   categoryMeta, PLACEHOLDER_PHONE, statusClass, statusLabel, statusMark, Listing,
-} from "/lib/listings";
-import { minutes, toneBg, toneBorder } from "/lib/tone";
+} from "../../lib/listings";
+import { minutes, toneBg, toneBorder } from "../../lib/tone";
 import { Icon } from "../Icon";
 
 export function ListingCard({

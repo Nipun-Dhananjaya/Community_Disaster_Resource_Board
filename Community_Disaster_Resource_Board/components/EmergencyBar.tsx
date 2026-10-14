@@ -1,4 +1,4 @@
-import { emergencyLines } from "/lib/data";
+import { emergencyLines } from "../lib/data";
 
 export function EmergencyBar() {
   return (

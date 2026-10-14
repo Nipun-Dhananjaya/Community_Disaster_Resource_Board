@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { fullSchema, validate } from "/lib/request-schema";
+import { fullSchema, validate } from "../../../lib/request-schema";
 
 export async function POST(req: Request) {
   let body: Record<string, unknown>;

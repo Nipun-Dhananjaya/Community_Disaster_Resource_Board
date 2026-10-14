@@ -2,13 +2,32 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
-import { navItems } from "/lib/data";
+import { useEffect, useState } from "react";
+import { navItems } from "../lib/data";
+import { clearUser, getUser, onAuthChange, DemoUser } from "../lib/auth";
 import { Icon } from "./Icon";
 
 export function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [user, setUser] = useState<DemoUser | null>(null);
+
+  useEffect(() => {
+    const read = () => setUser(getUser());
+    read();
+    return onAuthChange(read);
+  }, []);
+
+  const isActive = (href: string) => pathname === href || (href !== "/" && pathname.startsWith(href + "/"));
+
+  const authButton = (cls: string) =>
+      user ? (
+          <button type="button" onClick={() => { clearUser(); setOpen(false); }} className={cls} title={`Signed in as ${user.name}`}>
+            Log out
+          </button>
+      ) : (
+          <Link href="/login" onClick={() => setOpen(false)} className={cls}>Log in</Link>
+      );
 
   return (
       <header className="border-b border-line bg-white">
@@ -24,7 +43,7 @@ export function Header() {
 
           <nav aria-label="Main" className="hidden items-center gap-7 text-[16px] font-semibold text-navy-soft lg:flex">
             {navItems.map((item) => {
-              const active = pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href + "/"));
+              const active = isActive(item.href);
               return (
                   <Link
                       key={item.href}
@@ -44,9 +63,7 @@ export function Header() {
                 <option value="ta">தமி</option>
               </select>
             </label>
-            <Link href="/login" className="rounded-lg bg-navy px-4 py-2.5 text-[15px] font-bold text-white hover:bg-navy-soft">
-              Log in
-            </Link>
+            {authButton("rounded-lg bg-navy px-4 py-2.5 text-[15px] font-bold text-white hover:bg-navy-soft")}
           </nav>
 
           <button
@@ -68,16 +85,14 @@ export function Header() {
                       <Link
                           href={item.href}
                           onClick={() => setOpen(false)}
-                          aria-current={pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href + "/")) ? "page" : undefined}
+                          aria-current={isActive(item.href) ? "page" : undefined}
                           className="block py-3 text-[17px] font-semibold"
                       >
                         {item.label}
                       </Link>
                     </li>
                 ))}
-                <li className="py-3">
-                  <Link href="/login" className="inline-block rounded-lg bg-navy px-5 py-2.5 font-bold text-white">Log in</Link>
-                </li>
+                <li className="py-3">{authButton("inline-block rounded-lg bg-navy px-5 py-2.5 font-bold text-white")}</li>
               </ul>
             </nav>
         )}

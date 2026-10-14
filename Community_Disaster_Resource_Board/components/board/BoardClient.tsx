@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { categoryMeta, categoryOrder, listings, Category } from "/lib/listings";
+import { categoryMeta, categoryOrder, listings, Category } from "../../lib/listings";
 import { FiltersPanel } from "./FiltersPanel";
 import { ListingCard } from "./ListingCard";
 import dynamic from "next/dynamic";

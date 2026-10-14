@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { incident } from "/lib/data";
-import { minutes } from "/lib/tone";
+import { incident } from "../lib/data";
+import { minutes } from "../lib/tone";
 
 export function IncidentBanner() {
   return (

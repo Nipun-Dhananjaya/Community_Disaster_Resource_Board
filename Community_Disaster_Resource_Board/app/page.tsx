@@ -1,11 +1,11 @@
-import { EmergencyBar } from "/components/EmergencyBar";
-import { Header } from "/components/Header";
-import { IncidentBanner } from "/components/IncidentBanner";
-import { Hero } from "/components/Hero";
-import { StatsStrip } from "/components/StatsStrip";
-import { LatestUpdates } from "/components/LatestUpdates";
-import { HowItWorks } from "/components/HowItWorks";
-import { Footer } from "/components/Footer";
+import { EmergencyBar } from "../components/EmergencyBar";
+import { Header } from "../components/Header";
+import { IncidentBanner } from "../components/IncidentBanner";
+import { Hero } from "../components/Hero";
+import { StatsStrip } from "../components/StatsStrip";
+import { LatestUpdates } from "../components/LatestUpdates";
+import { HowItWorks } from "../components/HowItWorks";
+import { Footer } from "../components/Footer";
 
 export default function HomePage() {
   return (

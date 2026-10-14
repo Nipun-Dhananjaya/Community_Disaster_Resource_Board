@@ -1,4 +1,4 @@
-import { steps } from "/lib/data";
+import { steps } from "../lib/data";
 
 export function HowItWorks() {
   return (

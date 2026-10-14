@@ -3,7 +3,7 @@
 import "leaflet/dist/leaflet.css";
 import { useRouter } from "next/navigation";
 import { MapContainer, Marker, TileLayer } from "react-leaflet";
-import type { Listing } from "@/lib/listings";
+import type { Listing } from "../../lib/listings";
 import { pinIcon } from "../board/BoardMapLive";
 
 const TILE_URL = process.env.NEXT_PUBLIC_TILE_URL ?? "https://tile.openstreetmap.org/{z}/{x}/{y}.png";

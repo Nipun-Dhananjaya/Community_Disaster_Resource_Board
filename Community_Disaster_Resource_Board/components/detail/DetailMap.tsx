@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import type { Listing } from "/lib/listings";
+import type { Listing } from "../../lib/listings";
 
 // Leaflet needs the browser, so the map is loaded on the client only.
 const DetailMapLive = dynamic(() => import("./DetailMapLive").then((m) => m.DetailMapLive), {

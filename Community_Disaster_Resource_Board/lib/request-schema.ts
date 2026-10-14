@@ -1,6 +1,5 @@
 import { z } from "zod";
 import type { IconName } from "./data";
-import {satisfies} from "next/dist/lib/semver-noop";
 
 export const needOptions = [
   { key: "shelter", label: "Shelter", icon: "home", bg: "bg-ok" },
