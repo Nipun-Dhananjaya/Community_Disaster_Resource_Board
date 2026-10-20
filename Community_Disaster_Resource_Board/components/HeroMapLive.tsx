@@ -18,7 +18,7 @@ const bounds = L.latLngBounds(listings.map((l) => [l.lat, l.lng] as L.LatLngTupl
 export function HeroMapLive() {
     const router = useRouter();
     return (
-        <div className="hero-map relative aspect-[640/468] overflow-hidden rounded-2xl border border-line">
+        <div className="hero-map relative isolate aspect-[640/468] overflow-hidden rounded-2xl border border-line">
             <MapContainer
                 bounds={bounds}
                 boundsOptions={{ padding: [30, 30] }}
