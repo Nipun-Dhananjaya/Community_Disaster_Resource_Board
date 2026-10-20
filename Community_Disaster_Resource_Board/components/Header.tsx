@@ -1,33 +1,36 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { navItems } from "../lib/data";
-import { clearUser, getUser, onAuthChange, DemoUser } from "../lib/auth";
+import { fetchMe, logout, onAuthChange, SessionUser } from "../lib/client-auth";
+import { menuFor } from "../lib/roles";
+import { AccountMenu } from "./AccountMenu";
 import { Icon } from "./Icon";
 
 export function Header() {
   const pathname = usePathname();
+  const router = useRouter();
   const [open, setOpen] = useState(false);
-  const [user, setUser] = useState<DemoUser | null>(null);
+  // undefined = still asking the server; null = signed out
+  const [user, setUser] = useState<SessionUser | null | undefined>(undefined);
 
   useEffect(() => {
-    const read = () => setUser(getUser());
+    const read = () => fetchMe(true).then(setUser);
     read();
     return onAuthChange(read);
   }, []);
 
   const isActive = (href: string) => pathname === href || (href !== "/" && pathname.startsWith(href + "/"));
+  const loginHref = `/login?next=${encodeURIComponent(pathname)}`;
 
-  const authButton = (cls: string) =>
-      user ? (
-          <button type="button" onClick={() => { clearUser(); setOpen(false); }} className={cls} title={`Signed in as ${user.name}`}>
-            Log out
-          </button>
-      ) : (
-          <Link href="/login" onClick={() => setOpen(false)} className={cls}>Log in</Link>
-      );
+  async function doLogout() {
+    setOpen(false);
+    await logout();
+    router.push("/");
+    router.refresh();
+  }
 
   return (
       <header className="border-b border-line bg-white">
@@ -63,7 +66,13 @@ export function Header() {
                 <option value="ta">தமி</option>
               </select>
             </label>
-            {authButton("rounded-lg bg-navy px-4 py-2.5 text-[15px] font-bold text-white hover:bg-navy-soft")}
+            {user === undefined ? (
+                <span className="block h-[42px] w-[84px]" aria-hidden="true" />
+            ) : user ? (
+                <AccountMenu user={user} />
+            ) : (
+                <Link href={loginHref} className="rounded-lg bg-navy px-4 py-2.5 text-[15px] font-bold text-white hover:bg-navy-soft">Log in</Link>
+            )}
           </nav>
 
           <button
@@ -92,7 +101,23 @@ export function Header() {
                       </Link>
                     </li>
                 ))}
-                <li className="py-3">{authButton("inline-block rounded-lg bg-navy px-5 py-2.5 font-bold text-white")}</li>
+                {user ? (
+                    <li className="py-3">
+                      <p className="text-[14px] font-bold text-muted">Signed in as {user.name}</p>
+                      <ul className="mt-2 space-y-1">
+                        {menuFor(user.role, user.orgStatus).map((i) => (
+                            <li key={i.href}>
+                              <Link href={i.href} onClick={() => setOpen(false)} className="block py-2 text-[16px] font-semibold">{i.label}</Link>
+                            </li>
+                        ))}
+                        <li><button type="button" onClick={doLogout} className="py-2 text-[16px] font-semibold text-alert">Log out</button></li>
+                      </ul>
+                    </li>
+                ) : (
+                    <li className="py-3">
+                      <Link href={loginHref} onClick={() => setOpen(false)} className="inline-block rounded-lg bg-navy px-5 py-2.5 font-bold text-white">Log in</Link>
+                    </li>
+                )}
               </ul>
             </nav>
         )}
