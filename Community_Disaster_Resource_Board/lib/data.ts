@@ -7,6 +7,7 @@ export const incident = {
   areas: "Gampaha and Colombo districts",
   severity: "high",
   updatedMinAgo: 14,
+  advice: "Move to higher ground if water is rising near you.",
 };
 
 export const navItems = [
@@ -30,6 +31,7 @@ export type IconName = "home" | "box" | "heart" | "arrow" | "alert" | "check" | 
 
 export const updates: {
   id: string;
+  listingId: string;
   tone: Tone;
   icon: IconName;
   title: string;
@@ -40,6 +42,7 @@ export const updates: {
 }[] = [
   {
     id: "st-marys",
+    listingId: "s2",
     tone: "ok",
     icon: "home",
     title: "St. Mary’s Church Hall",
@@ -50,6 +53,7 @@ export const updates: {
   },
   {
     id: "water",
+    listingId: "p1",
     tone: "warn",
     icon: "box",
     title: "Drinking water, 500 bottles",
@@ -59,6 +63,7 @@ export const updates: {
   },
   {
     id: "family",
+    listingId: "r1",
     tone: "alert",
     icon: "alert",
     title: "Family of 5 needs evacuation",

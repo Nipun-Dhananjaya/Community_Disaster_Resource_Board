@@ -8,6 +8,9 @@ const schema = z.object({
   title: z.string().trim().min(5, "Enter a short title (at least 5 characters)").max(120, "Keep the title under 120 characters"),
   areas: z.string().trim().min(2, "Enter the affected areas").max(160, "Keep this under 160 characters"),
   severity: z.enum(["high", "medium", "low"], { message: "Choose a severity" }),
+  kind: z.enum(["official", "road", "weather", "platform"], { message: "Choose a type" }),
+  body: z.string().trim().min(5, "Write a short message (at least 5 characters)").max(300, "Keep the message under 300 characters"),
+  source: z.string().trim().min(2, "Enter the source").max(80, "Keep this under 80 characters"),
 });
 
 // Publishing alerts is admin-only. Moderators get a 403 even if they call this directly.

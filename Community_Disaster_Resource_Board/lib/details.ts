@@ -98,13 +98,72 @@ const details: Record<string, Detail> = {
 
 export function getDetail(l: Listing): Detail {
   return (
-    details[l.id] ?? {
-      description: `${l.title} · ${l.area}`,
-      address: l.area,
-      amenities: [],
-      contact: placeholderContact,
-      rules: [],
-      log: [{ minAgo: l.updatedMin, text: `Listing updated: ${l.headline}`, tone: "ok" }],
-    }
+      details[l.id] ?? {
+        description: `${l.title} · ${l.area}`,
+        address: l.area,
+        amenities: [],
+        contact: placeholderContact,
+        rules: [],
+        log: [{ minAgo: l.updatedMin, text: `Listing updated: ${l.headline}`, tone: "ok" }],
+      }
   );
 }
+
+/* ---------- supplies (water, food, medicine...) ---------- */
+export interface SupplyInfo {
+  categoryLabel: string;
+  provider: string;
+  providerVerified: boolean;
+  description: string;
+  left: number;
+  total: number;
+  limit: number;
+  unit: string;
+  condition: string;
+  howToGet: string;
+  hours: string;
+  address: string;
+  landmark: string;
+  collect: string;
+  delivery: boolean;
+  holdHours: number;
+  phone: string;
+  display: string;
+}
+
+const supplies: Record<string, SupplyInfo> = {
+  p1: {
+    categoryLabel: "Supplies · Water", provider: "Katunayake Youth Society", providerVerified: true,
+    description: "Provided by Katunayake Youth Society · new, sealed 1.5 L bottles",
+    left: 180, total: 500, limit: 12, unit: "bottles", condition: "New, expires 2027", howToGet: "Pickup only", hours: "8 am to 8 pm daily",
+    address: "Youth Society Hall, Katunayake", landmark: "opposite the bus halt",
+    collect: "Anyone affected by the flooding. Bring a container if you can. Bottles are handed out in the order people arrive, and the count above updates as stock goes.",
+    delivery: false, holdHours: 2, phone: "0110000000", display: "011 000 0000",
+  },
+  p2: {
+    categoryLabel: "Supplies · Food", provider: "Seeduwa Relief Volunteers", providerVerified: true,
+    description: "Provided by Seeduwa Relief Volunteers · dry rations for a family of four",
+    left: 320, total: 600, limit: 2, unit: "food packs", condition: "Packed today", howToGet: "Pickup or delivery", hours: "9 am to 5 pm daily",
+    address: "Seeduwa Community Centre", landmark: "next to the post office",
+    collect: "Families affected by the flooding, with priority for children and older people. One pack feeds a family of four for about three days.",
+    delivery: true, holdHours: 2, phone: "0110000000", display: "011 000 0000",
+  },
+  p3: {
+    categoryLabel: "Supplies · Medicine", provider: "Negombo Health Volunteers", providerVerified: true,
+    description: "Provided by Negombo Health Volunteers · basic first-aid kits",
+    left: 60, total: 100, limit: 1, unit: "first-aid kits", condition: "New and sealed", howToGet: "Pickup only", hours: "8 am to 6 pm daily",
+    address: "Health Volunteers Post, Negombo", landmark: "near the fish market",
+    collect: "Anyone who needs basic first aid. Ask for a volunteer if you need help with a wound. For anything serious, call 1990.",
+    delivery: false, holdHours: 2, phone: "0110000000", display: "011 000 0000",
+  },
+  p4: {
+    categoryLabel: "Supplies · Clothing", provider: "Wennappuwa Women’s Circle", providerVerified: false,
+    description: "Provided by Wennappuwa Women’s Circle · clean blankets and sleeping mats",
+    left: 150, total: 300, limit: 4, unit: "sets", condition: "Clean, used once", howToGet: "Pickup or delivery", hours: "10 am to 4 pm, Monday to Saturday",
+    address: "Women’s Circle Hall, Wennappuwa", landmark: "behind the market",
+    collect: "Anyone staying in a shelter or whose home is flooded. Bring a bag if you can.",
+    delivery: true, holdHours: 2, phone: "0110000000", display: "011 000 0000",
+  },
+};
+
+export const getSupply = (l: Listing): SupplyInfo | null => (l.category === "supply" ? supplies[l.id] ?? null : null);

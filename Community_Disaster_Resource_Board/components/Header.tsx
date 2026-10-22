@@ -9,7 +9,7 @@ import { menuFor } from "../lib/roles";
 import { AccountMenu } from "./AccountMenu";
 import { Icon } from "./Icon";
 
-export function Header() {
+export function Header({ activeHref }: { activeHref?: string }) {
   const pathname = usePathname();
   const router = useRouter();
   const [open, setOpen] = useState(false);
@@ -22,7 +22,8 @@ export function Header() {
     return onAuthChange(read);
   }, []);
 
-  const isActive = (href: string) => pathname === href || (href !== "/" && pathname.startsWith(href + "/"));
+  const isActive = (href: string) =>
+      activeHref ? href === activeHref : pathname === href || (href !== "/" && pathname.startsWith(href + "/"));
   const loginHref = `/login?next=${encodeURIComponent(pathname)}`;
 
   async function doLogout() {
@@ -33,7 +34,7 @@ export function Header() {
   }
 
   return (
-      <header className="relative z-40 border-b border-line bg-white">
+      <header className="border-b border-line bg-white">
         <div className="mx-auto flex max-w-[1328px] items-center justify-between gap-6 px-4 py-4 sm:px-8">
           <Link href="/" className="flex items-center gap-3">
           <span className="grid size-9 place-items-center rounded-lg bg-navy text-white">
