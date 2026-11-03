@@ -1,7 +1,7 @@
 /** Tiny text-only PDF writer (Helvetica, A4), so people can save a guide and read it offline. */
 const ascii = (s: string) =>
-  s.replace(/[’‘]/g, "'").replace(/[“”]/g, '"').replace(/[–—]/g, "-").replace(/[^\x20-\x7e]/g, "?")
-    .replace(/\\/g, "\\\\").replace(/\(/g, "\\(").replace(/\)/g, "\\)");
+    s.replace(/[’‘]/g, "'").replace(/[“”]/g, '"').replace(/[–—]/g, "-").replace(/[^\x20-\x7e]/g, "?")
+        .replace(/\\/g, "\\\\").replace(/\(/g, "\\(").replace(/\)/g, "\\)");
 
 function wrap(text: string, max: number): string[] {
   const words = text.split(/\s+/);
@@ -14,13 +14,14 @@ function wrap(text: string, max: number): string[] {
   return lines;
 }
 
-export function simplePdf(title: string, sections: { heading: string; items: string[] }[], footer: string): Buffer {
+export function simplePdf(title: string, sections: { heading: string; items: string[] }[], footer: string, bullet = "[  ]"): Buffer {
   type Line = { text: string; font: 1 | 2; size: number; x: number; gap: number };
   const lines: Line[] = [{ text: title, font: 2, size: 20, x: 56, gap: 30 }];
   for (const s of sections) {
     lines.push({ text: s.heading, font: 2, size: 14, x: 56, gap: 26 });
     for (const item of s.items) {
-      wrap(item, 78).forEach((t, i) => lines.push({ text: (i === 0 ? "[  ]  " : "        ") + t, font: 1, size: 11, x: 62, gap: 17 }));
+      const first = bullet ? bullet + "  " : "";
+      wrap(item, 78).forEach((t, i) => lines.push({ text: (i === 0 ? first : " ".repeat(first.length)) + t, font: 1, size: 11, x: 62, gap: 17 }));
     }
     lines.push({ text: "", font: 1, size: 11, x: 56, gap: 8 });
   }

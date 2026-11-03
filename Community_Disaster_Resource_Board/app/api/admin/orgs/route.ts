@@ -14,6 +14,6 @@ export async function POST(req: Request) {
   const target = findById(parsed.data.userId);
   if (!target || target.role !== "organization") return fail(404, "Organization not found");
   setOrgStatus(target.id, parsed.data.decision === "approve" ? "approved" : "rejected");
-  audit(g.session, parsed.data.decision === "approve" ? "approved organization" : "rejected organization", target.name);
+  audit(g.session, parsed.data.decision === "approve" ? "Approved organization" : "Rejected organization", target.name);
   return NextResponse.json({ ok: true });
 }

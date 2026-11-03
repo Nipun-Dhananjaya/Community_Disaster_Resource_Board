@@ -27,10 +27,13 @@ body { background: var(--color-canvas); color: var(--color-navy); font-family: v
 :focus-visible { outline: 3px solid #1a73e8; outline-offset: 2px; border-radius: 4px; }
 
 /* Low-bandwidth mode: drop the map and decorative weight */
-html.lowbw .hero-map, html.lowbw .board-map { display: none; }
+html.lowbw .hero-map { display: none; }
 html.lowbw .hero-grid { grid-template-columns: 1fr; }
 html.lowbw * { transition: none !important; animation: none !important; }
 
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }
 }
+
+/* Larger text option (Settings) */
+html.larger-text body { zoom: 1.125; }

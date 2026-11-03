@@ -1,9 +1,8 @@
-import { accountNav, adminNav, orgNav, type Role } from "../../lib/roles";
+import { accountNav, adminNav, orgNav, Role } from "../../lib/roles";
 import { DashboardShell } from "./DashboardShell";
 import { PageHeader } from "./ui";
 
-type Header = { title: string; subtitle: string; action?: { href: string; label: string } };
-
+type Header = { title: string; subtitle?: string; action?: { href: string; label: string }; actions?: React.ReactNode };
 export function AccountFrame({ children, ...h }: Header & { children: React.ReactNode }) {
   return (
     <DashboardShell brand={["My account", "Dashboard"]} nav={accountNav}>

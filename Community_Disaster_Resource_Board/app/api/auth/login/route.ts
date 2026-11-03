@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
 import { homeFor, privilegedRoles } from "../../../../lib/roles";
 import { fail, readJson, sameOrigin } from "../../../../lib/server/http";
+import { audit } from "../../../../lib/server/data";
 import { startPending2fa, startSession } from "../../../../lib/server/session";
-import { clearFailures, noteFailure, normalizeIdentifier, tooManyAttempts, verifyLogin } from "../../../../lib/server/users";
+import { clearFailures, findByIdentifier, noteFailure, normalizeIdentifier, tooManyAttempts, verifyLogin } from "../../../../lib/server/users";
 import { totp } from "../../../../lib/server/totp";
 
 export async function POST(req: Request) {
@@ -18,7 +19,10 @@ export async function POST(req: Request) {
   const user = verifyLogin(identifier, password);
   if (!user) {
     noteFailure(key);
-    return fail(401, "That email, phone or password isn’t right"); // same message either way
+    // Failed attempts on admin or moderator accounts go in the audit log. The visitor sees the same message either way.
+    const target = findByIdentifier(identifier);
+    if (target && privilegedRoles.includes(target.role)) audit({ name: "Unknown", role: "unknown" }, "Failed admin sign-in", "Wrong password for an admin account", "blocked");
+    return fail(401, "That email, phone or password isn’t right");
   }
   clearFailures(key);
 

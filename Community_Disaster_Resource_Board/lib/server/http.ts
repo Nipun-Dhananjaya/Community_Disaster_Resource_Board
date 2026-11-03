@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import type { Role } from "../roles";
-import { getSession, type Session } from "./session";
+import { getSession, Session } from "./session";
 
 /** Browsers always send Origin on POST. Rejecting other origins blocks cross-site request forgery. */
 export function sameOrigin(req: Request): boolean {
@@ -11,7 +11,7 @@ export function sameOrigin(req: Request): boolean {
 }
 
 export const fail = (status: number, message: string, errors?: Record<string, string>) =>
-  NextResponse.json({ ok: false, error: message, errors }, { status });
+    NextResponse.json({ ok: false, error: message, errors }, { status });
 
 /** API routes: check origin, session and role on every call. */
 export async function guardApi(req: Request, roles: Role[]): Promise<{ session: Session } | { response: NextResponse }> {
@@ -28,3 +28,12 @@ export async function readJson(req: Request): Promise<Record<string, unknown> | 
     return body && typeof body === "object" ? (body as Record<string, unknown>) : null;
   } catch { return null; }
 }
+
+/** For GET routes: check the session and role (no origin check needed, nothing changes). */
+export async function getApi(roles: Role[]): Promise<{ session: Session } | { response: NextResponse }> {
+  const session = await getSession();
+  if (!session) return { response: fail(401, "Please log in") };
+  if (!roles.includes(session.role)) return { response: fail(403, "You don’t have access to this") };
+  return { session };
+}
+export const ALL_ROLES: Role[] = ["individual", "volunteer", "organization", "moderator", "admin"];

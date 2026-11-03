@@ -1,6 +1,15 @@
 import { randomBytes, randomUUID, scryptSync, timingSafeEqual } from "node:crypto";
 import type { OrgStatus, Role } from "../roles";
 
+export interface Prefs {
+  alerts: boolean; requestUpdates: boolean; digest: boolean; channels: string[];
+  language: "en" | "si" | "ta"; lowBandwidth: boolean; largerText: boolean; hideProfile: boolean;
+}
+export const defaultPrefs: Prefs = {
+  alerts: true, requestUpdates: true, digest: false, channels: ["sms", "app"],
+  language: "en", lowBandwidth: false, largerText: false, hideProfile: true,
+};
+
 export interface UserRecord {
   id: string;
   name: string;
@@ -11,6 +20,10 @@ export interface UserRecord {
   hash: string;
   totpSecret?: string;
   createdAt: number;
+  phone?: string;
+  email?: string;
+  homeArea?: string;
+  prefs: Prefs;
 }
 
 type Db = { users: Map<string, UserRecord>; failures: Map<string, number[]> };
@@ -20,7 +33,11 @@ const hashPassword = (password: string, salt: string) => scryptSync(password, sa
 
 function make(id: string, name: string, identifier: string, password: string, role: Role, orgStatus: OrgStatus, totpSecret?: string): UserRecord {
   const salt = randomBytes(16).toString("hex");
-  return { id, name, identifier, role, orgStatus, salt, hash: hashPassword(password, salt), totpSecret, createdAt: Date.now() };
+  const isEmail = identifier.includes("@");
+  return {
+    id, name, identifier, role, orgStatus, salt, hash: hashPassword(password, salt), totpSecret, createdAt: Date.now(),
+    email: isEmail ? identifier : undefined, phone: isEmail ? undefined : identifier, prefs: { ...defaultPrefs, channels: [...defaultPrefs.channels] },
+  };
 }
 
 /** Demo accounts exist in development only. In production, accounts must come from your real database. */
@@ -32,7 +49,7 @@ function seed(db: Db) {
     make("u-mod", "Site Moderator", "mod@example.org", "Moderator#2026", "moderator", "none", DEV_TOTP_SECRET),
     make("u-org", "Central College Relief Centre", "org@example.org", "Org#2026demo", "organization", "approved"),
     make("u-org-pending", "Harbour Road Community Hall", "neworg@example.org", "Org#2026demo", "organization", "pending"),
-    make("u-nimali", "Nimali Fernando", "nimali@example.org", "Nimali#2026", "individual", "none"),
+    { ...make("u-nimali", "Nimali Fernando", "nimali@example.org", "Nimali#2026", "individual", "none"), homeArea: "Negombo", phone: "0770000000" },
     make("u-vol", "Kasun Silva", "volunteer@example.org", "Volunteer#2026", "volunteer", "none"),
   ];
   for (const u of list) db.users.set(u.id, u);
@@ -100,4 +117,26 @@ export function noteFailure(key: string) {
 }
 export function clearFailures(key: string) {
   db().failures.delete(key);
+}
+
+export function updateProfile(id: string, p: { name: string; phone: string; email: string; homeArea: string }) {
+  const u = findById(id);
+  if (!u) return null;
+  u.name = p.name.trim(); u.phone = p.phone.trim() || undefined; u.email = p.email.trim().toLowerCase() || undefined; u.homeArea = p.homeArea.trim() || undefined;
+  return u;
+}
+export function updatePrefs(id: string, patch: Partial<Prefs>) {
+  const u = findById(id);
+  if (!u) return null;
+  u.prefs = { ...u.prefs, ...patch };
+  return u;
+}
+export function changePassword(id: string, next: string) {
+  const u = findById(id);
+  if (!u) return;
+  u.salt = randomBytes(16).toString("hex");
+  u.hash = hashPassword(next, u.salt);
+}
+export function deleteUser(id: string) {
+  return db().users.delete(id);
 }

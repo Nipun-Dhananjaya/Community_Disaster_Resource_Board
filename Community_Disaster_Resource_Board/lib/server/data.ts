@@ -2,7 +2,7 @@ import { randomUUID } from "node:crypto";
 import type { Role } from "../roles";
 import type { Session } from "./session";
 
-export interface AuditEntry { id: string; at: string; actor: string; role: Role; action: string; target: string }
+export interface AuditEntry { id: string; at: string; actor: string; role: Role | "unknown"; action: string; target: string; result: "done" | "blocked" }
 export interface QueueItem {
   id: string; title: string; note: string; kind: "verify_shelter" | "flagged" | "verify_team";
   createdAt: number; status: "waiting" | "in_review";
@@ -39,15 +39,21 @@ function store(): Store {
       reservations: [],
       capacity: new Map([["u-org", { beds: 38, total: 120, status: "available", confirmedAt: now - 12 * 60_000 }]]),
     };
+    seedAudit(g.__cdrbData.audit);
   }
   return g.__cdrbData;
 }
 
-export function audit(actor: Pick<Session, "name" | "role">, action: string, target: string) {
-  store().audit.unshift({ id: randomUUID(), at: new Date().toISOString(), actor: actor.name, role: actor.role, action, target });
-  store().audit.splice(500); // keep the last 500 entries in memory
+/** Append-only: there is no function to edit or delete an entry. Entries older than 12 months are dropped. */
+export function audit(actor: { name: string; role: Role | "unknown" }, action: string, target: string, result: "done" | "blocked" = "done") {
+  const list = store().audit;
+  list.unshift({ id: randomUUID(), at: new Date().toISOString(), actor: actor.name, role: actor.role, action, target, result });
+  const cutoff = Date.now() - 365 * 86_400_000;
+  while (list.length > 5000 || (list.length && new Date(list[list.length - 1].at).getTime() < cutoff)) list.pop();
 }
 export const listAudit = () => store().audit;
+export const recentSignIns = (name: string) =>
+    store().audit.filter((e) => e.actor === name && /sign-in/i.test(e.action)).slice(0, 3);
 
 export const listQueue = () => store().queue;
 export function moderate(id: string, action: "approve" | "remove" | "review" | "edit", actor: Session, title?: string) {
@@ -55,10 +61,10 @@ export function moderate(id: string, action: "approve" | "remove" | "review" | "
   const i = q.findIndex((x) => x.id === id);
   if (i < 0) return { ok: false as const, error: "Item not found" };
   const item = q[i];
-  if (action === "approve") { q.splice(i, 1); audit(actor, "approved", item.title); }
-  else if (action === "remove") { q.splice(i, 1); audit(actor, "removed", item.title); }
-  else if (action === "review") { item.status = "in_review"; audit(actor, "started review of", item.title); }
-  else if (action === "edit" && title) { audit(actor, `renamed "${item.title}" to`, title); item.title = title; }
+  if (action === "approve") { q.splice(i, 1); audit(actor, "Approved listing", item.title); }
+  else if (action === "remove") { q.splice(i, 1); audit(actor, "Removed listing", item.title); }
+  else if (action === "review") { item.status = "in_review"; audit(actor, "Started review", item.title); }
+  else if (action === "edit" && title) { audit(actor, "Edited listing", `${item.title} → ${title}`); item.title = title; }
   return { ok: true as const };
 }
 
@@ -67,7 +73,7 @@ export function publishAlert(actor: Session, a: Omit<Alert, "id" | "publishedAt"
   const near = a.areas.split(/,| and /)[0].trim();
   const alert: Alert = { ...a, near, id: randomUUID(), publishedAt: new Date().toISOString(), by: actor.name };
   store().alerts.unshift(alert);
-  audit(actor, "published alert", `${a.title} (${a.severity})`);
+  audit(actor, "Published alert", `${a.title} (${a.severity})`);
   return alert;
 }
 
@@ -77,7 +83,7 @@ export function setCapacity(actor: Session, beds: number, status: Capacity["stat
   const cur = getCapacity(actor.id);
   const next = { ...cur, beds, status, confirmedAt: Date.now() };
   store().capacity.set(actor.id, next);
-  audit(actor, "updated capacity", `${beds} of ${cur.total} beds free (${status})`);
+  audit(actor, "Updated capacity", `${beds} of ${cur.total} beds free (${status})`);
   return next;
 }
 
@@ -104,3 +110,49 @@ export function addReservation(input: { listingId: string; qty: number; phone: s
   store().reservations.push(r);
   return r;
 }
+
+export function addQueueItem(item: { title: string; note: string; kind: QueueItem["kind"] }) {
+  store().queue.unshift({ id: randomUUID(), ...item, createdAt: Date.now(), status: "waiting" });
+}
+
+/* ---------- demo audit history (development only) ---------- */
+function seedAudit(list: AuditEntry[]) {
+  if (process.env.NODE_ENV === "production") return;
+  const rows: [string, AuditEntry["role"], string, string, AuditEntry["result"]][] = [
+    ["Kasun W.", "admin", "Published alert", "Kelani flooding, red warning", "done"],
+    ["Dilini R.", "moderator", "Approved listing", "St. Mary’s Church Hall", "done"],
+    ["Dilini R.", "moderator", "Removed listing", "Fuel, 200 litres (outdated)", "done"],
+    ["Kasun W.", "admin", "Changed role", "User #2291 to Moderator", "done"],
+    ["Unknown", "unknown", "Failed admin sign-in", "Admin console from new device", "blocked"],
+    ["Ayesha M.", "moderator", "Suspended user", "User #1873, spam", "done"],
+    ["Kasun W.", "admin", "Closed incident", "Landslide, Ratnapura", "done"],
+    ["Dilini R.", "moderator", "Edited listing", "Central College Relief Centre", "done"],
+  ];
+  const base = [8, 19, 35, 52, 60, 88, 103, 130];
+  for (let i = 0; i < 48; i++) {
+    const [actor, role, action, target, result] = rows[i % 8];
+    const mins = i < 8 ? base[i] : base[i % 8] + Math.floor(i / 8) * 1440 + (i % 5) * 37;
+    list.push({ id: randomUUID(), at: new Date(Date.now() - mins * 60_000).toISOString(), actor, role, action, target, result });
+  }
+}
+
+/* ---------- messages from the public: contact form and accessibility feedback ---------- */
+export interface Inbound { id: string; kind: "contact" | "barrier"; topic: string; name: string; contact: string; org: string; message: string; at: number }
+const gi = globalThis as unknown as { __cdrbInbox?: { items: Inbound[]; recent: Map<string, number[]> } };
+function inbox() {
+  if (!gi.__cdrbInbox) gi.__cdrbInbox = { items: [] as Inbound[], recent: new Map<string, number[]>() };
+  return gi.__cdrbInbox;
+}
+
+/** Stores a message. Allows 5 per key per hour, so one person can't flood the inbox. */
+export function addInbound(key: string, item: Omit<Inbound, "id" | "at">): { ok: true; ref: string } | { ok: false } {
+  const box = inbox();
+  const recent = (box.recent.get(key) ?? []).filter((t) => Date.now() - t < 3600_000);
+  if (recent.length >= 5) return { ok: false };
+  box.recent.set(key, [...recent, Date.now()]);
+  const id = randomUUID();
+  box.items.unshift({ ...item, id, at: Date.now() });
+  box.items.splice(500);
+  return { ok: true, ref: "MSG-" + id.replace(/-/g, "").slice(0, 6).toUpperCase() };
+}
+export const listInbound = () => inbox().items;

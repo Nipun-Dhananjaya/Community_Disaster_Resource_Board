@@ -1,7 +1,7 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
 import { cookies } from "next/headers";
-import { privilegedRoles, type OrgStatus, type Role } from "../roles";
-import { findById, type UserRecord } from "./users";
+import { privilegedRoles, OrgStatus, Role } from "../roles";
+import { findById, UserRecord } from "./users";
 
 const SESSION = "cdrb_session";
 const PENDING = "cdrb_2fa";
@@ -37,7 +37,7 @@ type PendingPayload = { uid: string; exp: number };
 
 export async function startSession(user: UserRecord, mfa: boolean) {
   const privileged = privilegedRoles.includes(user.role);
-  const seconds = privileged ? 2 * 3600 : 8 * 3600; // admins get shorter sessions
+  const seconds = privileged ? 30 * 60 : 8 * 3600; // admins and moderators: 30-minute sessions
   const store = await cookies();
   store.set(SESSION, sign({ uid: user.id, exp: Date.now() + seconds * 1000, mfa } satisfies SessionPayload), cookieOpts(seconds));
   store.delete(PENDING);
